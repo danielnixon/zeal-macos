@@ -14,7 +14,7 @@ IFS=$'\t\n' # Stricter IFS settings
 ZEAL_VERSION=0.5.0
 
 # Deps
-# brew install qt5 libarchive
+# brew install qt@5.5 libarchive
 
 # Download Zeal.
 git clone https://github.com/zealdocs/zeal.git
