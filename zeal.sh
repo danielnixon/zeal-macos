@@ -39,8 +39,7 @@ rm -rf .git
 cd .. || exit
 tar -cvzf zeal-$ZEAL_VERSION-macos-src.tgz ./zeal
 
-# Build
-# Not sure if INCLUDEPATH and LIBS really need to be set
+# Build.
 cd zeal || exit
 /usr/local/Cellar/qt@5.5/5.5.1_1/bin/qmake INCLUDEPATH+=/usr/local/opt/libarchive/include
 make SUBLIBS="-L/usr/local/opt/libarchive/lib -larchive -lsqlite3"
