@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
 # Build Zeal for macOS.
+# See https://github.com/zealdocs/zeal/wiki/Build-Instructions-for-macOS
 # Based on https://github.com/Stratus3D/dotfiles/blob/master/scripts/setup/install/zeal.sh
 #
 
@@ -10,7 +11,7 @@ set -euo pipefail
 IFS=$'\t\n' # Stricter IFS settings
 
 # Version to build.
-ZEAL_VERSION=0.3.1
+ZEAL_VERSION=0.5.0
 
 # Deps
 # brew install qt5 libarchive
@@ -25,10 +26,10 @@ git checkout v${ZEAL_VERSION}
 # Note that the versions in the paths must be correct.
 cat << EOF >> src/libs/core/core.pri
 macx: {
-    INCLUDEPATH += /usr/local/Cellar/libarchive/3.2.2/include
-    LIBS += -L/usr/local/Cellar/libarchive/3.2.2/lib -larchive
-    INCLUDEPATH += /usr/local/Cellar/sqlite/3.15.2/include
-    LIBS += -L/usr/local/Cellar/sqlite/3.15.2/lib -lsqlite3
+    INCLUDEPATH += /usr/local/Cellar/libarchive/3.3.2/include
+    LIBS += -L/usr/local/Cellar/libarchive/3.3.2/lib -larchive
+    INCLUDEPATH += /usr/local/Cellar/sqlite/3.21.0/include
+    LIBS += -L/usr/local/Cellar/sqlite/3.21.0/lib -lsqlite3
 
 }
 EOF
@@ -41,8 +42,8 @@ tar -cvzf zeal-$ZEAL_VERSION-macos-src.tgz ./zeal
 # Build
 # Not sure if INCLUDEPATH and LIBS really need to be set
 cd zeal || exit
-/usr/local/opt/qt5/bin/qmake -makefile INCLUDEPATH+=/usr/local/opt/libarchive/include "LIBS+=-L/usr/local/opt/libarchive/lib -larchive"
-make
+/usr/local/Cellar/qt@5.5/5.5.1_1/bin/qmake INCLUDEPATH+=/usr/local/opt/libarchive/include
+make SUBLIBS="-L/usr/local/opt/libarchive/lib -larchive -lsqlite3"
 
 cd .. || exit
 
